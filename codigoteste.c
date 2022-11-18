@@ -4,7 +4,8 @@
 int main(){
   
   int a=2;
-  a = a + a;
+  int b=0;
+  
   
   
 
