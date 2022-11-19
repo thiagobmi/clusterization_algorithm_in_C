@@ -1,73 +1,102 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
 
-struct ponto{
-
+struct ponto
+{
     int *X;
     int *Y;
 };
 
 typedef struct ponto Ponto;
 
+Ponto *alocamemoria(int n)
+{
 
-Ponto *alocamemoria(int n){
-    
-    Ponto *pontos=malloc(sizeof(Ponto)*n);
-    for(int i=0;i<n;i++){
-        pontos[i].X=malloc(sizeof(int));
+    Ponto *pontos = malloc(sizeof(Ponto) * n);
+    for (int i = 0; i < n; i++)
+    {
+        pontos[i].X = malloc(sizeof(int));
     }
-    
-    for(int i=0;i<n;i++){
-        pontos[i].Y=malloc(sizeof(int));
+
+    for (int i = 0; i < n; i++)
+    {
+        pontos[i].Y = malloc(sizeof(int));
     }
 
     return pontos;
 }
 
-int agrupaPontos(Ponto *pontos,int n,int k){
+float *agrupaPontos(Ponto *pontos, int n, int k)
+{
+    int i,j;
+    float distancias[k][n], menordistancia[n], menor = 9999, grupos[k][n];
+    Ponto *centros = alocamemoria(k);
 
-    float distancias[k][n];
-    Ponto *centros=alocamemoria(k);
-    
-    for(int i=0;i<k;i++){
-        printf("X centro %d =%d  ",i,*centros[i].X=-20+rand()%50);
-        printf("Y centro %d =%d\n",i,*centros[i].Y=-20+rand()%50);
+    for (i = 0; i < k; i++)
+    {
+        printf("X centro %d =%d  ", i, *centros[i].X = -20 + rand() % 50);
+        printf("Y centro %d =%d\n", i, *centros[i].Y = -20 + rand() % 50);
     }
 
+    for (j = 0; j < k; j++)
+    {
+        printf("\n\nCentro %d\n\n", j);
+        for (i = 0; i < n; i++)
+        {
+            printf("Distancia %d =%f\n", i, distancias[j][i] = sqrt(pow((*pontos[i].X - *centros[j].X), 2) + pow((*pontos[i].Y - *centros[j].Y), 2)));
+        }
+    }
 
-    printf("Centro 0\n\n\n");
+    for (i = 0; i < n; i++)
+    {
+        menor = 9999;
+        for (j = 0; j < k; j++)
+        {
+            if (distancias[j][i] < menor)
+            {
+                menordistancia[i] = distancias[j][i];
+                menor = distancias[j][i];
+            }
+        }
+    }
 
-    for(int i=0;i<n;i++)printf("Distancia %d =%f\n",i,sqrt(pow((*pontos[i].X - *centros[0].X ),2) + pow((*pontos[i].Y- *centros[0].Y),2)));
+    for (i = 0; i < n; i++)
+        printf("\n\nA menor distancia do ponto %d eh %f", i, menordistancia[i]);
 
-    printf("Centro 1\n\n\n");
+    for (j = 0; j < k; j++)
+    {
+        for (i = 0; i < n; i++)
+        {
 
-    for(int i=0;i<n;i++)printf("Distancia %d =%f\n",i,sqrt(pow((*pontos[i].X - *centros[1].X ),2) + pow((*pontos[i].Y- *centros[1].Y),2)));
-
-
+            if (distancias[j][i]==menordistancia[i]){
+                printf("\n\nO ponto %d pertence ao centro %d\n\n",i,j);
+                grupos[j][i]=menordistancia[i];
+            }
+        }
+    }
+    return grupos;
 }
 
+int main()
+{
 
-int main(){
+    int n = 0;
 
-    int n=0;
-    
-    n=5;
+    n = 5;
 
     srand(time(NULL));
 
-    Ponto *pontos=alocamemoria(n);
-    
-    for(int i=0;i<n;i++){
-        printf("X[%d] =%d  ",i,*pontos[i].X=-20+rand()%50);
-        printf("Y[%d] =%d\n",i,*pontos[i].Y=-20+rand()%50);
+    Ponto *pontos = alocamemoria(n);
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("X[%d] =%d  ", i, *pontos[i].X = -20 + rand() % 50);
+        printf("Y[%d] =%d\n", i, *pontos[i].Y = -20 + rand() % 50);
     }
-    
+
     printf("\n\n\n\n");
 
-    agrupaPontos(pontos,n,2);
-
-
-
+    agrupaPontos(pontos, n, 3);
 }
