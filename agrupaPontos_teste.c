@@ -28,7 +28,7 @@ Ponto *alocamemoria(int n)
     return pontos;
 }
 
-float **agrupaPontos(Ponto *pontos, int n, int k)
+int ***agrupaPontos(Ponto *pontos, int n, int k)
 {
     int i, j;
     float distancias[k][n], menordistancia[n], menor = 9999;
@@ -84,10 +84,12 @@ float **agrupaPontos(Ponto *pontos, int n, int k)
             {
                 printf("\n\nO ponto %d pertence ao centro %d\n\n", i, j);
                 grupos[j][i][0] = *pontos[i].X;
-                printf("%d %d   ",j,grupos[j][i][0]);
                 grupos[j][i][1] = *pontos[i].Y;
-                printf("%d\n",grupos[j][i][1]);
+            }else {
+                grupos[j][i][0]=0;
+                grupos[j][i][1]=0;
             }
+
         }
     }
     return grupos;
@@ -96,8 +98,8 @@ float **agrupaPontos(Ponto *pontos, int n, int k)
 int main()
 {
 
-    int n = 0;
-    float **grupos;
+    int n = 0, k=3;
+    int ***grupos;
     n = 7;
 
     srand(time(NULL));
@@ -112,5 +114,15 @@ int main()
 
     printf("\n\n\n\n");
 
-    agrupaPontos(pontos, n, 3);
+    grupos=agrupaPontos(pontos, n, k);
+
+    for(int i=0;i<k;i++){
+        printf("Componentes do centro %d:\n\n",i);
+        for(int j=0;j<n;j++){
+            if(grupos[i][j][0]!=0 && grupos[i][j][1]!=0)
+            printf("X=%d  Y=%d\n",grupos[i][j][0],grupos[i][j][1]);
+        }
+        printf("\n\n\n");
+
+    }
 }

@@ -67,6 +67,9 @@ int ***agrupaPontos(Ponto *pontos, int n, int k)
             {
                 grupos[j][i][0] = *pontos[i].X;
                 grupos[j][i][1] = *pontos[i].Y;
+            }else{
+                grupos[j][i][0]=0;
+                grupos[j][i][1]=0;
             }
 
     return grupos;
@@ -87,7 +90,7 @@ Ponto *geraPontos(Ponto *pontos, int n)
 int main(int argc, char *argv[])
 {
 
-    int n = 0, k = 0;
+    int n = 0, k = 0,***grupos;
 
     n = atoi(argv[1]);
     k = atoi(argv[2]);
@@ -96,5 +99,15 @@ int main(int argc, char *argv[])
 
     Ponto *pontos = alocamemoria(n);
     pontos = geraPontos(pontos, n);
-    agrupaPontos(pontos, n, k);
+    grupos=agrupaPontos(pontos, n, k);
+
+        for(int i=0;i<k;i++){
+        printf("Componentes do centro %d:\n\n",i);
+        for(int j=0;j<n;j++){
+            if(grupos[i][j][0]!=0 && grupos[i][j][1]!=0)
+            printf("X=%d  Y=%d\n",grupos[i][j][0],grupos[i][j][1]);
+        }
+        printf("\n");
+
+    }
 }
