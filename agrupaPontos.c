@@ -31,7 +31,6 @@ void liberamemoria(float *menordistancia, float **distancias, Ponto *pontos, int
     {
         free(pontos[i].X);
         free(pontos[i].Y);
-        free(distancias[i]);
     }
     free(distancias);
     free(pontos);
@@ -55,18 +54,18 @@ int ***agrupaPontos(Ponto *pontos, int n, int k)
     int i, j;
     float menor = 9999;
     float *menordistancia = malloc(sizeof(float) * n);
-    float **distancias = malloc(sizeof(float) * n );
+    float **distancias = malloc(sizeof(float) * n);
 
     for (i = 0; i < k; i++)
         distancias[i] = malloc(sizeof(float) * n);
 
-    int ***grupos = malloc(sizeof(int) * n * n);
+    int ***grupos = malloc(sizeof(int) * n );
     for (j = 0; j < n; j++)
     {
-        grupos[j] = malloc(sizeof(float) * n);
+        grupos[j] = malloc(sizeof(int) * n);
         for (i = 0; i < n; i++)
         {
-            grupos[j][i] = malloc(sizeof(float) * n);
+            grupos[j][i] = malloc(sizeof(int) * 2);
         }
     }
     Ponto *centros = alocamemoria(k);
@@ -114,6 +113,7 @@ int main(int argc, char *argv[])
 {
 
     int n = 0, k = 0, ***grupos;
+    int *contador = malloc(sizeof(int) * k);
 
     n = atoi(argv[1]);
     k = atoi(argv[2]);
