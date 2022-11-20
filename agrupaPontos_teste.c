@@ -31,17 +31,26 @@ Ponto *alocamemoria(int n)
 int ***agrupaPontos(Ponto *pontos, int n, int k)
 {
     int i, j;
-    float distancias[k][n], menordistancia[n], menor = 9999;
+    float menor = 9999;
+    
+    float *menordistancia=malloc(sizeof(float)*n*n);
 
-    int ***grupos = malloc(sizeof(int) * k);
+    float**distancias=malloc(sizeof(float)*n*n);
+
+    for(i=0;i<k;i++)distancias[i]=malloc(sizeof(float)*n*n);
+
+    printf("\n\n\n\naaa");
+
+    int ***grupos = malloc(sizeof(int) * n*2);
     for (j = 0; j < n; j++)
     {
-        grupos[j] = malloc(sizeof(float) * n);
+        grupos[j] = malloc(sizeof(float) * n*2);
         for (i = 0; i < n; i++)
         {
-            grupos[j][i] = malloc(sizeof(float) * 2);
+            grupos[j][i] = malloc(sizeof(float) * n*2);
         }
     }
+    
     Ponto *centros = alocamemoria(k);
 
     for (i = 0; i < k; i++)
@@ -72,6 +81,8 @@ int ***agrupaPontos(Ponto *pontos, int n, int k)
         }
     }
 
+    
+
     for (i = 0; i < n; i++)
         printf("\n\nA menor distancia do ponto %d eh %f", i, menordistancia[i]);
 
@@ -92,15 +103,29 @@ int ***agrupaPontos(Ponto *pontos, int n, int k)
 
         }
     }
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     free(pontos[i].X);
+    //     free(pontos[i].Y);
+    //     free(distancias[i]);
+    // }
+    // free(pontos);
+    // free(menordistancia);
+    
     return grupos;
 }
 
 int main()
 {
 
-    int n = 0, k=3;
+    int n = 0, k=5;
     int ***grupos;
-    n = 7;
+    n = 1;
+
+
+
+
 
     srand(time(NULL));
 
@@ -112,7 +137,7 @@ int main()
         printf("Y[%d] =%d\n", i, *pontos[i].Y = -20 + rand() % 50);
     }
 
-    printf("\n\n\n\n");
+    printf("\n\n\n\naaa");
 
     grupos=agrupaPontos(pontos, n, k);
 
@@ -125,4 +150,5 @@ int main()
         printf("\n\n\n");
 
     }
+
 }
