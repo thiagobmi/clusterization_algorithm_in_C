@@ -22,12 +22,12 @@ typedef struct centroF CentroF;
 CentroF *alocaMemCentroF(int k)
 {
 
-    CentroF *centroF = malloc(sizeof(float) * k * 2);
+    CentroF *centroF = malloc(sizeof(float) * k * 5);
     for (int i = 0; i < k; i++)
-        centroF[i].X = (float *)malloc(sizeof(float) * 2);
+        centroF[i].X = (float *)malloc(sizeof(float) * 2* 2);
 
     for (int i = 0; i < k; i++)
-        centroF[i].Y = (float *)malloc(sizeof(float) * 2);
+        centroF[i].Y = (float *)malloc(sizeof(float) * 2*2);
 
     return centroF;
 }
@@ -203,6 +203,7 @@ int main(int argc, char *argv[])
 
     n = atoi(argv[1]);
     k = atoi(argv[2]);
+
 
     srand(time(NULL));
 
